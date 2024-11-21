@@ -1,0 +1,51 @@
+### Find ALl words
+GET http://localhost:8080/api/words
+
+### Find word By ID
+GET http://localhost:8080/api/words/1
+
+
+### Create new word
+POST http://localhost:8080/api/words
+Content-Type: application/json
+
+{
+	"id": 3,
+    "UserId": 2,
+    "word": "chtarakatek",
+    "keyword": "tirara",
+    "result": "chriguibiguibaw",
+    "encryption": "ENCRYPT",
+    "time": "2022-12-12T15:20:12.497678"
+}
+
+### Create new word with invalid word 
+POST http://localhost:8080/api/words
+Content-Type: application/json
+
+{
+	"id": 4,
+    "UserId": 2,
+    "word": "",
+    "keyword": "tirara",
+    "result": "chriguibiguibaw",
+    "encryption": "ENCRYPT",
+    "time": "2022-12-12T15:20:12.497678"
+}
+
+### Update an existing word
+PUT http://localhost:8080/api/words/3
+Content-Type: application/json
+
+{
+  "id": 3,
+    "UserId": 2,
+    "word": "UPDATE",
+    "keyword": "tirara",
+    "result": "chriguibiguibaw",
+    "encryption": "ENCRYPT",
+    "time": "2022-12-12T15:20:12.497678"
+}
+
+### Delete a word
+DELETE http://localhost:8080/api/words/2

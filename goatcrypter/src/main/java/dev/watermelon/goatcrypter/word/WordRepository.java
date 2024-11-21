@@ -39,6 +39,106 @@ public class WordRepository {
         words.removeIf(word -> word.id().equals(id));
     }
 
+    Word encrypt(String wordToBeEncrypted){
+        int id = getNextId();
+        String keyword = "G.O.A.T";
+        String result = "";
+        Encryption encryption = Encryption.ENCRYPT;
+        LocalDateTime time = LocalDateTime.now();
+
+        int keywordIndex = 0;
+
+        for(int i=0; i<wordToBeEncrypted.length(); i++){
+            if(keywordIndex > keyword.length()){
+                keywordIndex = 0;
+            }
+
+            result += addAToB(wordToBeEncrypted.charAt(i), keyword.charAt(keywordIndex));
+        }
+
+        Word word = new Word(
+            id,
+            null,
+            wordToBeEncrypted,
+            keyword,
+            result,
+            encryption,
+            time
+        );
+
+        words.add(word);
+        return word;
+    }
+
+    Word decrypt(String wordToBeDecrypted){
+        int id = getNextId();
+        String keyword = "G.O.A.T";
+        String result = "";
+        Encryption encryption = Encryption.DECRYPT;
+        LocalDateTime time = LocalDateTime.now();
+
+		int keywordLength = keyword.length();
+		int wordLength = wordToBeDecrypted.length();
+		int keywordIndex = 0;
+		
+		for(int i=0; i<wordLength; i++) {
+			if(keywordIndex > keywordLength) {
+				keywordIndex = 0;
+			}
+			
+			result += subtractAFromB(wordToBeDecrypted.charAt(i), keyword.charAt(keywordIndex));
+		}
+		
+        Word word = new Word(
+            id,
+            null,
+            wordToBeDecrypted,
+            keyword,
+            result,
+            encryption,
+            time
+        );
+
+        words.add(word);
+        return word;
+    }
+
+    char addAToB(char a, char b) {
+		int asciiA = a;
+		int asciiB = b;
+		int sum = asciiA + asciiB;
+		
+		if(sum > 126) {
+			return (char) (sum-95);
+		} else {
+			return (char) sum;
+		}
+	}
+
+    public char subtractAFromB(char a, char b) {
+		int asciiA = a;
+		int asciiB = b;
+		int sum = asciiA - asciiB;
+		
+		if(sum < 32) {
+			return (char) (sum+95);
+		} else {
+			return (char) (sum);
+		}
+		
+	}
+
+    int getNextId(){
+        int id = 0;
+        for(Word word : words){
+            if(word.id() > id){
+                id = word.id();
+            }
+        }
+
+        return id+1;
+    }
+
     @PostConstruct
     private void init(){
         words.add(new Word(

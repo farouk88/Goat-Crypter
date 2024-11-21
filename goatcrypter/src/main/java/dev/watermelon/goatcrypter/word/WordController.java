@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-
-
-
-
-
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -41,7 +38,7 @@ public class WordController {
     Word findById(@PathVariable Integer id) {
         Optional<Word> word = wordRepository.findById(id);
         if(word.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new WordNotFoundException();
         }
 
         return word.get();
@@ -50,24 +47,36 @@ public class WordController {
     //post
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    void create(@RequestBody Word word){
+    void create(@Valid @RequestBody Word word){
         wordRepository.create(word);
     }
 
     //put
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    void update(@RequestBody Word word, @PathVariable Integer id) {
+    void update(@Valid @RequestBody Word word, @PathVariable Integer id) {
         wordRepository.update(word, id);
     }
     
     //delete
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    void delete(Integer id){
+    void delete(@PathVariable Integer id){
         wordRepository.delete(id);
     }
 
+    //encrypt
+    @GetMapping("/encrypt {wordToBeEncrypted}")
+    Word encrypt(@PathVariable String wordToBeEncrypted) {
+        return wordRepository.encrypt(wordToBeEncrypted);
+    }
+
+    //decrypt
+    @GetMapping("/decrypt {wordToBeDecrypted}")
+    Word decrypt(@PathVariable String wordToBeDecrypted) {
+        return wordRepository.decrypt(wordToBeDecrypted);
+    }
+    
     
     
 }
