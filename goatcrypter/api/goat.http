@@ -48,4 +48,4 @@ Content-Type: application/json
 }
 
 ### Delete a word
-DELETE http://localhost:8080/api/words/2
+DELETE http://localhost:8080/api/words/7
