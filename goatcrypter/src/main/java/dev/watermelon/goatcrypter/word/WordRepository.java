@@ -1,7 +1,6 @@
 package dev.watermelon.goatcrypter.word;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,6 @@ import org.springframework.util.Assert;
 @Repository
 public class WordRepository {
     
-    private List<Word> words = new ArrayList<>();
     private final JdbcClient jdbcClient;
 
     public WordRepository(JdbcClient jdbcClient){
@@ -26,30 +24,30 @@ public class WordRepository {
     }
 
     public Optional<Word> findById(Integer id) {
-        return jdbcClient.sql("SELECT id,UserId,word,keyword,result,encryption, time FROM HISTORY WHERE id = :id" )
+        return jdbcClient.sql("SELECT id,UserId,word,keyword,result,encryption, time FROM history WHERE id = :id" )
                 .param("id", id)
                 .query(Word.class)
                 .optional();
     }
 
     public void create(Word word) {
-        var updated = jdbcClient.sql("INSERT INTO HISTORY(id,UserId,word,keyword,result,encryption,time) values(?,?,?,?,?,?,?)")
-                .params(List.of(word.id(),word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(), word.time().toString()))
+        var updated = jdbcClient.sql("INSERT INTO history(id,UserId,word,keyword,result,encryption,time) values(?,?,?,?,?,?,?)")
+                .params(List.of(word.id(),word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(), word.time()))
                 .update();
 
         Assert.state(updated == 1, "Failed to create word " + word.UserId());
     }
 
     public void update(Word word, Integer id) {
-        var updated = jdbcClient.sql("update HISTORY set UserId = ?, word = ?, keyword = ?, result = ?, encryption = ?, time = ? where id = ?")
-                .params(List.of(word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(),word.time().toString(), id))
+        var updated = jdbcClient.sql("update history set UserId = ?, word = ?, keyword = ?, result = ?, encryption = ?, time = ? where id = ?")
+                .params(List.of(word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(),word.time(), id))
                 .update();
 
         Assert.state(updated == 1, "Failed to update word " + word.UserId());
     }
 
     public void delete(Integer id) {
-        var updated = jdbcClient.sql("delete from HISTORY where id = :id")
+        var updated = jdbcClient.sql("delete from history where id = :id")
                 .param("id", id)
                 .update();
 
@@ -57,7 +55,7 @@ public class WordRepository {
     }
 
     public int count() {
-        return jdbcClient.sql("select * from HISTORY").query().listOfRows().size();
+        return jdbcClient.sql("select * from history").query().listOfRows().size();
     }
 
     public void saveAll(List<Word> words) {
