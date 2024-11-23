@@ -5,42 +5,68 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import jakarta.annotation.PostConstruct;
+import org.springframework.util.Assert;
 
 @Repository
 public class WordRepository {
     
     private List<Word> words = new ArrayList<>();
+    private final JdbcClient jdbcClient;
 
-    List<Word> findAll() {
-        return words;
+    public WordRepository(JdbcClient jdbcClient){
+        this.jdbcClient = jdbcClient;
+    }
+    
+    public List<Word> findAll() {
+        return jdbcClient.sql("select * from history")
+                        .query(Word.class)
+                        .list();
     }
 
-    Optional<Word> findById(Integer id){
-        return words.stream()
-                    .filter(word -> word.id() == id)
-                    .findFirst();
+    public Optional<Word> findById(Integer id) {
+        return jdbcClient.sql("SELECT id,UserId,word,keyword,result,encryption, time FROM HISTORY WHERE id = :id" )
+                .param("id", id)
+                .query(Word.class)
+                .optional();
     }
 
-    void create(Word word){
-        words.add(word);
+    public void create(Word word) {
+        var updated = jdbcClient.sql("INSERT INTO HISTORY(id,UserId,word,keyword,result,encryption,time) values(?,?,?,?,?,?,?)")
+                .params(List.of(word.id(),word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(), word.time().toString()))
+                .update();
+
+        Assert.state(updated == 1, "Failed to create word " + word.UserId());
     }
 
-    void update(Word word, Integer id){
-        Optional<Word> existingWord = findById(id);
-        if(existingWord.isPresent()){
-            words.set(words.indexOf(existingWord.get()), word);
-        }
+    public void update(Word word, Integer id) {
+        var updated = jdbcClient.sql("update HISTORY set UserId = ?, word = ?, keyword = ?, result = ?, encryption = ?, time = ? where id = ?")
+                .params(List.of(word.UserId(),word.word(),word.keyword(),word.result(),word.encryption().toString(),word.time().toString(), id))
+                .update();
+
+        Assert.state(updated == 1, "Failed to update word " + word.UserId());
     }
 
-    void delete(Integer id){
-        words.removeIf(word -> word.id().equals(id));
+    public void delete(Integer id) {
+        var updated = jdbcClient.sql("delete from HISTORY where id = :id")
+                .param("id", id)
+                .update();
+
+        Assert.state(updated == 1, "Failed to delete word " + id);
+    }
+
+    public int count() {
+        return jdbcClient.sql("select * from HISTORY").query().listOfRows().size();
+    }
+
+    public void saveAll(List<Word> words) {
+        words.stream().forEach(this::create);
     }
 
     Word encrypt(String wordToBeEncrypted){
-        int id = getNextId();
+        int id = (int) jdbcClient.sql("select max(id) from history").query().singleValue() + 1;
+        int UserId = 0;
         String keyword = "G.O.A.T";
         String result = "";
         Encryption encryption = Encryption.ENCRYPT;
@@ -58,7 +84,7 @@ public class WordRepository {
 
         Word word = new Word(
             id,
-            null,
+            UserId,
             wordToBeEncrypted,
             keyword,
             result,
@@ -66,12 +92,13 @@ public class WordRepository {
             time
         );
 
-        words.add(word);
+        create(word);
         return word;
     }
 
     Word decrypt(String wordToBeDecrypted){
-        int id = getNextId();
+        int id = (int) jdbcClient.sql("select max(id) from history").query().singleValue() + 1;
+        int UserId = 0;
         String keyword = "G.O.A.T";
         String result = "";
         Encryption encryption = Encryption.DECRYPT;
@@ -91,7 +118,7 @@ public class WordRepository {
 		
         Word word = new Word(
             id,
-            null,
+            UserId,
             wordToBeDecrypted,
             keyword,
             result,
@@ -99,7 +126,7 @@ public class WordRepository {
             time
         );
 
-        words.add(word);
+        create(word);
         return word;
     }
 
@@ -127,37 +154,5 @@ public class WordRepository {
 		}
 		
 	}
-
-    int getNextId(){
-        int id = 0;
-        for(Word word : words){
-            if(word.id() > id){
-                id = word.id();
-            }
-        }
-
-        return id+1;
-    }
-
-    @PostConstruct
-    private void init(){
-        words.add(new Word(
-            1,
-            1, 
-            ".IZW]S", 
-            "G.O.A.T", 
-            "Farouk", 
-            Encryption.DECRYPT, 
-            LocalDateTime.now()));
-
-        words.add(new Word(
-            2,
-            1, 
-            "Farouk", 
-            "G.O.A.T", 
-            ".IZW]S", 
-            Encryption.ENCRYPT, 
-            LocalDateTime.now()));
-    }
-
+    
 }

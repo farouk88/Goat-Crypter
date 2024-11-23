@@ -1,0 +1,40 @@
+{ 
+    "words": [
+        {
+        "id": 1,
+        "UserId": 1,
+        "word": "Farouk",
+        "keyword": "G.O.A.T",
+        "result": ".IZW]S",
+        "encryption": "ENCRYPT",
+        "time": "2017-01-01T07:00:00"
+        },
+        {
+        "id": 2,
+        "UserId": 1,
+        "word": ".IZW]S",
+        "keyword": "G.O.A.T",
+        "result": "Farouk",
+        "encryption": "DECRYPT",
+        "time": "2017-01-01T07:00:00"
+        },
+        {
+        "id": 3,
+        "UserId": 0,
+        "word": "Fekih",
+        "keyword": "G.O.A.T",
+        "result": ".MSQP",
+        "encryption": "ENCRYPT",
+        "time": "2024-11-23T13:43:04.540459"
+        },
+        {
+        "id": 4,
+        "UserId": 0,
+        "word": ".MSQP",
+        "keyword": "G.O.A.T",
+        "result": "Fekih",
+        "encryption": "DECRYPT",
+        "time": "2024-11-23T13:43:31.334898"
+        }
+    ]
+}
