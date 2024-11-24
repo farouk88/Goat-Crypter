@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Your Profile</h2>
+        <form id="profile-form">
+            <input type="text" id="profile-username" placeholder="Username" readonly>
+            <input type="email" id="profile-email" placeholder="Email" required>
+            <input type="password" id="profile-password" placeholder="New Password">
+            <input type="password" id="confirm-profile-password" placeholder="Confirm New Password">
+            <button type="submit">Update Profile</button>
+        </form>
+        <div id="error-message" style="display: none; color: red;">Passwords don't match</div>
+        <div id="update-message" style="display: none; color: green;">Profile updated successfully!</div>
+    </div>
+    <script src="/js/profileUpdate.js"></script>
+</body>
+</html>

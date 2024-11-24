@@ -21,7 +21,7 @@ public class RegistrationController {
     }
     
     @PostMapping(value = "/signup", consumes="application/json")
-    public MyAppUser creatUser(@RequestBody MyAppUser user) {
+    public MyAppUser createUser(@RequestBody MyAppUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return myAppUserRepository.save(user);
     }

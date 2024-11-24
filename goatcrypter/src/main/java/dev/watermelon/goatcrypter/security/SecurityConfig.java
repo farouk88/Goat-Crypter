@@ -49,12 +49,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(httpForm -> {
                     httpForm.loginPage("/login").permitAll();
-                    httpForm.defaultSuccessUrl("/", true);
+                    httpForm.defaultSuccessUrl("/profile", true);
 
                 })
 
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/signup", "/css/**", "/js/**", "/images/**").permitAll();
+                    registry.requestMatchers("/profile.html", "/api/profile", "/api/profile/update", "/goat.html").authenticated();
                     registry.anyRequest().authenticated();
                 })
 
