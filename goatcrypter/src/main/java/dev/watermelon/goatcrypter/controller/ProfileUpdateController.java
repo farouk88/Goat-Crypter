@@ -43,19 +43,4 @@ public class ProfileUpdateController {
         }
     }
 
-    // @PutMapping
-    // public MyAppUser updatUserProfile(@AuthenticationPrincipal UserDetails userDetails, @RequestBody MyAppUser updatedUser) {
-    //     MyAppUser existingUser = myAppUserRepository.findByUsername(updatedUser.getUsername()).get();
-
-    //     if(existingUser != null){
-    //         existingUser.setEmail(updatedUser.getEmail());
-    //         if(updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()){
-    //             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-    //         }
-
-    //         myAppUserRepository.save(existingUser);
-    //     }
-        
-    //     return existingUser;
-    // }
 }

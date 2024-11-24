@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 email,
                 password
             };
-            
             if(password === confirmPassword){
                 const jsonData = JSON.stringify(data);
                 fetch('/api/profile/update', {

@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signup-form');
+    
     if (signupForm) {
         signupForm.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (password === confirmPassword) {
                 const jsonData = JSON.stringify(data);
+
                 fetch('/signup', {
                     method: 'POST',
                     headers: {
@@ -23,16 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: jsonData
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Signup successful:', data);
-                    window.location.href = '/login.html'; // Redirect to login page after successful signup
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Signup successful');
+                        window.location.href = '/login'; // Redirect to login page after successful signup
+                    } else {
+                        return response.text().then(errorMessage => {
+                            console.error('Error:', errorMessage);
+                            const urlParams = new URLSearchParams(window.location.search);
+                            document.getElementById('error-message').style.display = 'block';
+                        });
+                    }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
             } else {
-                console.error('Passwords do not match');
+                alert("Passwords do not match");
             }
         });
     }
