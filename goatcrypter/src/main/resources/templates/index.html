@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="/css/homeStyle.css">
+    <title>Welcome to the Goat Crypter</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/homeStyle.css" rel="stylesheet"></link>
 </head>
 <body>
-    <div class="homepage-container">
-        <header>
-            <h1>Welcome to Our Website</h1>
-            <nav>
-                <ul>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Sign Up</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main>
-            <section>
-                <h2>About Us</h2>
-                <p>Welcome to our website! We are delighted to have you here. Our platform offers a range of features and services designed to help you achieve your goals.</p>
-            </section>
-            <section>
-                <h2>Features</h2>
-                <ul>
-                    <li>Feature 1: Description of feature 1.</li>
-                    <li>Feature 2: Description of feature 2.</li>
-                    <li>Feature 3: Description of feature 3.</li>
-                </ul>
-            </section>
-            <a href="/goat">Go to GOAT!</a>
-        </main>
-        <footer>
-            <p>&copy; 2024 Our Website. All rights reserved.</p>
-        </footer>
+    <div class="container header">
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">GOAT Crypter</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="signup">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="hero d-flex align-items-center justify-content-center text-center text-white">
+            <div class="container">
+                <h2 class="smooth-appear">Welcome to GOAT Crypter</h2>
+                <p class="smooth-appear">Your ultimate encryption and decryption tool.</p>
+                <a href="signup.html" class="btn btn-primary smooth-appear">Get Started</a>
+            </div>
+        </section>
     </div>
-    <script src="/js/scripts.js"></script>
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/home.js"></script>
 </body>
 </html>

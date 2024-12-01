@@ -1,60 +1,71 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    scroll-behavior: smooth;
 }
-
-.homepage-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.header {
+    background: url('https://img.goodfon.com/wallpaper/nbig/d/9b/goat-fire-horns-head-ai-art-wallpaper-graphics-picture-mobil.webp') no-repeat center center/cover;
 }
-
-header {
-    background-color: #007BFF;
-    color: white;
-    padding: 20px;
-    text-align: center;
+nav {
+    background-color: rgba(67, 46, 84, 0.8);
 }
-
-header h1 {
-    margin: 0;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 10px;
-}
-
-nav ul li a {
-    color: white;
+nav a {
+    color: #fff;
+    padding: 1rem;
     text-decoration: none;
-    font-weight: bold;
 }
-
-main {
-    flex: 1;
-    padding: 20px;
-    background-color: #ffffff;
-    text-align: center;
-}
-
-main section {
-    margin: 20px 0;
-}
-
-footer {
-    background-color: #007BFF;
+nav a:hover {
+    background-color: #AE445A;
     color: white;
+    transition: .2s ease-in;
+}
+.hero {
+    height: 60vh;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+.hero a {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.hero a:hover {
+    background-color: #ff4f41;
+}
+.features {
+    padding: 2rem 0;
+}
+.feature {
     text-align: center;
-    padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    margin: 1rem 0;
+}
+.feature h3 {
+    color: #333;
+}
+.feature p {
+    color: #666;
+}
+footer {
+    background-color: #333;
+}
+.smooth-appear {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+.smooth-appear.active {
+    opacity: 1;
+    transform: translateY(0);
 }
